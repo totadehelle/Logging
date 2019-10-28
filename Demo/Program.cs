@@ -11,8 +11,7 @@ namespace Demo
 		{
 			Log.Logger.Configure()
 				.SetMinimumLevel(LogLevel.Information)
-				.WriteTo.Console()
-				.WriteTo.File("path");
+				.WriteTo.Console();
 			
 			Log.Information("Just info");
 		}

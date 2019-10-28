@@ -12,18 +12,19 @@ namespace Logging
 		{
 			if(Logger.MinimumLevel>LogLevel.Verbose)
 				return;
-			string logMessage = "[" + DateTime.UtcNow + "]"
-			                    + "[VRB]"
+			string logMessage = "[VRB]"
+								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]";
 			Logger.Write(logMessage);
 		}
 		
 		public static void Debug(string message)
 		{
+			
 			if (Logger.MinimumLevel > LogLevel.Debug)
 				return;
-			string logMessage = "[" + DateTime.UtcNow + "]"
-			                    + "[DBG]"
+			string logMessage = "[DBG]"
+								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]";
 			Logger.Write(logMessage);
 		}
@@ -32,8 +33,8 @@ namespace Logging
 		{
 			if (Logger.MinimumLevel > LogLevel.Information)
 				return;
-			string logMessage = "[" + DateTime.UtcNow + "]"
-			                    + "[INF]"
+			string logMessage = "[INF]"
+								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]";
 			Logger.Write(logMessage);
 		}
@@ -42,8 +43,8 @@ namespace Logging
 		{
 			if (Logger.MinimumLevel > LogLevel.Warning)
 				return;
-			string logMessage = "[" + DateTime.UtcNow + "]"
-			                    + "[WRN]"
+			string logMessage = "[WRN]"
+								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]";
 			Logger.Write(logMessage);
 		}
@@ -52,8 +53,8 @@ namespace Logging
 		{
 			if (Logger.MinimumLevel > LogLevel.Error)
 				return;
-			string logMessage = "[" + DateTime.UtcNow + "]"
-			                    + "[ERR]"
+			string logMessage = "[ERR]"
+								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]"
 								+ exception;
 			Logger.Write(logMessage);
@@ -61,10 +62,10 @@ namespace Logging
 		
 		public static void Fatal(string message, Exception exception)
 		{
-			string logMessage = "[" + DateTime.UtcNow + "]"
-			                    + "[FAT]"
+			string logMessage = "[FAT]"
+								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]"
-			                    + exception;
+								+ exception;
 			Logger.Write(logMessage);
 		}
 	}

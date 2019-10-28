@@ -31,6 +31,7 @@ namespace Logging
 
 		public void Write(string message)
 		{
+			System.Diagnostics.Debug.Write(message);
 			foreach (var module in OutputModules.Values)
 			{
 				module.Write(message);
