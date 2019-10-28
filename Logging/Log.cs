@@ -55,7 +55,7 @@ namespace Logging
 				return;
 			string logMessage = "[ERR]"
 								+ "[" + DateTime.UtcNow + "]"
-			                    + "[Message: " + message + "]"
+			                    + "[Message: " + message + "]\n"
 								+ exception;
 			Logger.Write(logMessage);
 		}
@@ -64,7 +64,7 @@ namespace Logging
 		{
 			string logMessage = "[FAT]"
 								+ "[" + DateTime.UtcNow + "]"
-			                    + "[Message: " + message + "]"
+			                    + "[Message: " + message + "]\n"
 								+ exception;
 			Logger.Write(logMessage);
 		}

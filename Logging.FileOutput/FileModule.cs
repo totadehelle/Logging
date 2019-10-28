@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Logging.Interfaces;
 
 namespace Logging.FileOutput
@@ -12,7 +13,10 @@ namespace Logging.FileOutput
 		}
 		public void Write(string message)
 		{
-			throw new NotImplementedException();
+			using (StreamWriter writer = File.AppendText(_path))
+			{
+				writer.WriteLine(message);
+			};
 		}
 	}
 }
