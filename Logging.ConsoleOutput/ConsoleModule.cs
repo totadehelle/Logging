@@ -1,4 +1,5 @@
-﻿using Logging.Interfaces;
+﻿using System;
+using Logging.Interfaces;
 
 namespace Logging.ConsoleOutput
 {
@@ -6,7 +7,7 @@ namespace Logging.ConsoleOutput
 	{
 		public void Write(string message)
 		{
-			throw new System.NotImplementedException();
+			Console.WriteLine(message);
 		}
 	}
 }
