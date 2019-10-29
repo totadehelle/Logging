@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 using Logging.Enums;
 using Logging.Interfaces;
 
@@ -7,21 +7,31 @@ namespace Logging
 {
 	public class LoggerConfiguration
 	{
-		public readonly ILogger Logger;
-		public ModuleSetter WriteTo { get; }
+		private readonly LoggerSingleton _logger;
+
 		public LoggerConfiguration()
 		{
-			Logger = Log.Logger;
-			if(Logger.IsConfigured)
+			_logger = LoggerSingleton.Instance;
+			if(_logger.IsConfigured)
 				throw new Exception("Logger may be configured once only.");
-			Logger.IsConfigured = true;
-			WriteTo = new ModuleSetter(this);
 		}
 
 		public LoggerConfiguration SetMinimumLevel(LogLevel level)
 		{
-			Logger.MinimumLevel = level;
+			_logger.MinimumLevel = level;
 			return this;
+		}
+
+		public LoggerConfiguration SetOutputModules(List<IOutputModule> modules)
+		{
+			_logger.OutputModules.AddRange(modules);
+			return this;
+		}
+
+		public ILogger CreateLogger()
+		{
+			_logger.IsConfigured = true;
+			return _logger;
 		}
 	}
 }

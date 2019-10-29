@@ -6,58 +6,47 @@ namespace Logging
 {
 	public static class Log
 	{
-		public static ILogger Logger { get; } = LoggerSingleton.Instance;
+		public static ILogger Logger { get; set; }
 
 		public static void Verbose(string message)
 		{
-			if(Logger.MinimumLevel>LogLevel.Verbose)
-				return;
 			string logMessage = "[VRB]"
 								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]";
-			Logger.Write(logMessage);
+			Logger.Write(logMessage, LogLevel.Verbose);
 		}
 		
 		public static void Debug(string message)
 		{
-			
-			if (Logger.MinimumLevel > LogLevel.Debug)
-				return;
 			string logMessage = "[DBG]"
 								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]";
-			Logger.Write(logMessage);
+			Logger.Write(logMessage, LogLevel.Debug);
 		}
 		
 		public static void Information(string message)
 		{
-			if (Logger.MinimumLevel > LogLevel.Information)
-				return;
 			string logMessage = "[INF]"
 								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]";
-			Logger.Write(logMessage);
+			Logger.Write(logMessage, LogLevel.Information);
 		}
 		
 		public static void Warning(string message)
 		{
-			if (Logger.MinimumLevel > LogLevel.Warning)
-				return;
 			string logMessage = "[WRN]"
 								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]";
-			Logger.Write(logMessage);
+			Logger.Write(logMessage, LogLevel.Warning);
 		}
 		
 		public static void Error(string message, Exception exception)
 		{
-			if (Logger.MinimumLevel > LogLevel.Error)
-				return;
 			string logMessage = "[ERR]"
 								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]\n"
 								+ exception;
-			Logger.Write(logMessage);
+			Logger.Write(logMessage, LogLevel.Error);
 		}
 		
 		public static void Fatal(string message, Exception exception)
@@ -66,7 +55,7 @@ namespace Logging
 								+ "[" + DateTime.UtcNow + "]"
 			                    + "[Message: " + message + "]\n"
 								+ exception;
-			Logger.Write(logMessage);
+			Logger.Write(logMessage, LogLevel.Fatal);
 		}
 	}
 }

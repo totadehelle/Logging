@@ -7,12 +7,12 @@ namespace Logging
 {
 	public class LoggerSingleton : ILogger
 	{
-		public LogLevel MinimumLevel { get; set; } = LogLevel.Information;
-		public Dictionary<OutputModule, IOutputModule> OutputModules { get; set; } = new Dictionary<OutputModule, IOutputModule>();
+		internal LogLevel MinimumLevel { get; set; } = LogLevel.Information;
+		internal List<IOutputModule> OutputModules { get; set; } = new List<IOutputModule>();
+		
+		internal static LoggerSingleton Instance { get; }
 
-		public static LoggerSingleton Instance { get; }
-
-		public bool IsConfigured { get; set; } = false;
+		internal bool IsConfigured { get; set; } = false;
 
 		static LoggerSingleton()
 		{
@@ -24,15 +24,13 @@ namespace Logging
 			
 		}
 
-		public LoggerConfiguration Configure()
-		{
-			return new LoggerConfiguration();
-		}
-
-		public void Write(string message)
+		
+		public void Write(string message, LogLevel level)
 		{
 			System.Diagnostics.Debug.Write(message);
-			foreach (var module in OutputModules.Values)
+			if(level < MinimumLevel)
+				return;
+			foreach (var module in OutputModules)
 			{
 				module.Write(message);
 			}

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Logging;
 using Logging.ConsoleOutput;
 using Logging.Enums;
 using Logging.FileOutput;
+using Logging.Interfaces;
 
 namespace Demo
 {
@@ -10,22 +12,17 @@ namespace Demo
 	{
 		static void Main(string[] args)
 		{
-			Log.Logger.Configure()
+			Log.Logger = new LoggerConfiguration()
 				.SetMinimumLevel(LogLevel.Information)
-				.WriteTo.Console()
-				.WriteTo.File("log.txt");
+				.SetOutputModules(new List<IOutputModule>()
+				{
+					new FileModule("log.txt")
+				})
+				.CreateLogger();
 			
 			Log.Information("Just info");
 			Log.Warning("Something expires soon");
-			try
-			{
-				throw new Exception("AAAaaa!");
-			}
-			catch (Exception e)
-			{
-				Log.Fatal("Very fatal error", e);
-				throw;
-			}
+			Log.Debug("Smth");
 		}
 	}
 }
