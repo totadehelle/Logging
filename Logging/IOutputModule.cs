@@ -1,4 +1,4 @@
-﻿namespace Logging.Interfaces
+﻿namespace Logging
 {
 	public interface IOutputModule
 	{
