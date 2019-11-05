@@ -22,74 +22,60 @@ namespace Logging
                 throw new Exception("Logger may be configured once only.");
             return new LoggerConfiguration();
         }
-        
+
         /// <summary>
         /// Log message with Verbose level of severity
         /// </summary>
-        public static void Verbose(string message)
-		{
-			string logMessage = "[VRB]"
-								+ "[UTC " + DateTime.UtcNow + "]"
-			                    + "[Message: " + message + "]";
-			Logger.Write(logMessage, LogLevel.Verbose);
-		}
+        public static void Verbose(string message, object data = null)
+        {
+            var logMessage = new Message(message, LogLevel.Verbose, data);
+            Logger.Write(logMessage);
+        }
 
         /// <summary>
         /// Log message with Debug level of severity
         /// </summary>
-        public static void Debug(string message)
-		{
-			string logMessage = "[DBG]"
-								+ "[UTC " + DateTime.UtcNow + "]"
-			                    + "[Message: " + message + "]";
-			Logger.Write(logMessage, LogLevel.Debug);
-		}
+        public static void Debug(string message, object data = null)
+        {
+            var logMessage = new Message(message, LogLevel.Debug, data);
+            Logger.Write(logMessage);
+        }
 
         /// <summary>
         /// Log message with Information level of severity
         /// </summary>
-        public static void Information(string message)
-		{
-			string logMessage = "[INF]"
-								+ "[UTC " + DateTime.UtcNow + "]"
-			                    + "[Message: " + message + "]";
-			Logger.Write(logMessage, LogLevel.Information);
-		}
+        public static void Information(string message, object data = null)
+        {
+            var logMessage = new Message(message, LogLevel.Information, data);
+            Logger.Write(logMessage);
+        }
 
         /// <summary>
         /// Log message with Warning level of severity
         /// </summary>
-        public static void Warning(string message)
-		{
-			string logMessage = "[WRN]"
-								+ "[UTC " + DateTime.UtcNow + "]"
-			                    + "[Message: " + message + "]";
-			Logger.Write(logMessage, LogLevel.Warning);
-		}
+        public static void Warning(string message, object data = null)
+        {
+            var logMessage = new Message(message, LogLevel.Warning, data);
+            Logger.Write(logMessage);
+        }
 
         /// <summary>
         /// Log message with Error level of severity
         /// </summary>
-        public static void Error(string message, Exception exception)
-		{
-			string logMessage = "[ERR]"
-								+ "[UTC " + DateTime.UtcNow + "]"
-			                    + "[Message: " + message + "]\n"
-								+ exception;
-			Logger.Write(logMessage, LogLevel.Error);
-		}
+        public static void Error(string message, Exception exception, object data = null)
+        {
+            var logMessage = new Message(message, LogLevel.Error, data);
+            Logger.Write(logMessage, exception);
+        }
 
         /// <summary>
         /// Log message with Fatal level of severity
         /// </summary>
-        public static void Fatal(string message, Exception exception)
+        public static void Fatal(string message, Exception exception, object data = null)
 		{
-			string logMessage = "[FAT]"
-								+ "[UTC " + DateTime.UtcNow + "]"
-			                    + "[Message: " + message + "]\n"
-								+ exception;
-			Logger.Write(logMessage, LogLevel.Fatal);
-		}
+            var logMessage = new Message(message, LogLevel.Fatal, data);
+            Logger.Write(logMessage, exception);
+        }
 
         /// <summary>
         /// Free all disposable resources and delete links to output modules from logger.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Logging.Format;
 
 namespace Logging
 {
@@ -7,22 +8,34 @@ namespace Logging
 	{
 		internal LogLevel MinimumLevel = LogLevel.Information;
 		internal List<IOutputModule> OutputModules = new List<IOutputModule>();
-        internal bool IsDebugOutputOn = false;
+        internal IMessageFormatter Formatter = new DefaultMessageFormatter();
 
         internal Logger()
         {
             
         }
         
-        public void Write(string message, LogLevel level)
+        public void Write(ILogMessage message)
 		{
-			if(level < MinimumLevel)
+			if(message.LevelOfSeverity < MinimumLevel)
 				return;
+            var formattedMessage = Formatter.Format(message);
             foreach (var module in OutputModules)
 			{
-				module.Write(message);
+				module.Write(formattedMessage);
 			}
 		}
+
+        public void Write(ILogMessage message, Exception ex)
+        {
+            if (message.LevelOfSeverity < MinimumLevel)
+                return;
+            var formattedMessage = Formatter.Format(message, ex);
+            foreach (var module in OutputModules)
+            {
+                module.Write(formattedMessage);
+            }
+        }
 
         public void Flush()
         {

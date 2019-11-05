@@ -1,4 +1,6 @@
-﻿namespace Logging
+﻿using System;
+
+namespace Logging
 {
     public class DefaultLogger : ILogger
     {
@@ -7,7 +9,12 @@
             
         }
         
-        public void Write(string message, LogLevel level)
+        public void Write(ILogMessage message)
+        {
+            
+        }
+
+        public void Write(ILogMessage message, Exception ex)
         {
             
         }

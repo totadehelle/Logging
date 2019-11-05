@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Logging.Format;
 
 namespace Logging
 {
@@ -21,7 +22,19 @@ namespace Logging
 		{
 			_logger.MinimumLevel = level;
 			return this;
-		}
+        }
+
+        /// <summary>
+        /// Set message formatter with specific message template. Default template looks like:
+        /// [INF][UTC 12/1/2000 00:00:00][Message: Your log message text][Data: {"clientId":3947}].
+        /// </summary>
+        /// <param name="formatter"></param>
+        /// <returns></returns>
+        public LoggerConfiguration SetFormatter(IMessageFormatter formatter)
+        {
+            _logger.Formatter = formatter;
+            return this;
+        }
 
         /// <summary>
         /// Add new output module for logger.
