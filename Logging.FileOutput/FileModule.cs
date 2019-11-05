@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Logging.FileOutput
 {
@@ -12,18 +13,21 @@ namespace Logging.FileOutput
 		{
 			_path = path;
             _messagesQueue = new BlockingCollection<string>();
-            foreach (var message in _messagesQueue.GetConsumingEnumerable())
+            Task.Run(() =>
             {
-                try
+                foreach (var message in _messagesQueue.GetConsumingEnumerable())
                 {
-                    ProcessQueueMessage(message);
+                    try
+                    {
+                        ProcessQueueMessage(message);
+                    }
+                    catch (Exception e)
+                    {
+                        _messagesQueue.Dispose();
+                        throw new LoggingFailedException("Logging to file failed. " + e.Message);
+                    }
                 }
-                catch (Exception e)
-                {
-                    _messagesQueue.Dispose();
-                    throw new LoggingFailedException("Logging to file failed. " + e.Message);
-                }
-            }
+            });
         }
 		
         public void Write(string message)
@@ -59,6 +63,7 @@ namespace Logging.FileOutput
 
         public void Dispose()
         {
+            _messagesQueue.CompleteAdding();
             _messagesQueue.Dispose();
         }
     }
