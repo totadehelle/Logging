@@ -1,8 +1,8 @@
 ﻿namespace Logging
 {
-    internal static class GlobalLogger
+    internal static class GlobalLoggerContext
     {
-        static GlobalLogger()
+        static GlobalLoggerContext()
         {
             
         }

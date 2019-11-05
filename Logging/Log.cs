@@ -10,7 +10,7 @@ namespace Logging
             
         }
 
-        internal static ILogger Logger { get; } = GlobalLogger.Instance;
+        internal static ILogger Logger => GlobalLoggerContext.Instance;
 
         /// <summary>
         /// Start logger configuration process.
@@ -18,7 +18,7 @@ namespace Logging
         /// <returns></returns>
         public static LoggerConfiguration GetBuilder()
         {
-            if (GlobalLogger.IsConfigured)
+            if (GlobalLoggerContext.IsConfigured)
                 throw new Exception("Logger may be configured once only.");
             return new LoggerConfiguration();
         }
@@ -97,7 +97,7 @@ namespace Logging
         public static void Close()
         {
             var oldLogger = Logger;
-            GlobalLogger.Instance = Interlocked.Exchange(ref GlobalLogger.Instance, new DefaultLogger());
+            GlobalLoggerContext.Instance = Interlocked.Exchange(ref GlobalLoggerContext.Instance, new DefaultLogger());
             oldLogger.Flush();
         }
 	}

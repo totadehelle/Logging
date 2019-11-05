@@ -14,8 +14,15 @@ namespace Logging.FileOutput
             _messagesQueue = new BlockingCollection<string>();
             foreach (var message in _messagesQueue.GetConsumingEnumerable())
             {
-                // of course you'll want your exception handling in here
-                ProcessQueueMessage(message);
+                try
+                {
+                    ProcessQueueMessage(message);
+                }
+                catch (Exception e)
+                {
+                    _messagesQueue.Dispose();
+                    throw new LoggingFailedException("Logging to file failed. " + e.Message);
+                }
             }
         }
 		

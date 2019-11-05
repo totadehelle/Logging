@@ -10,7 +10,14 @@ namespace Logging.ConsoleOutput
         }
         public void Write(string message)
 		{
-			Console.WriteLine(message);
+            try
+            {
+                Console.WriteLine(message);
+            }
+            catch (Exception e)
+            {
+                throw new LoggingFailedException("Logging to console failed. " + e.Message);
+            }
 		}
 	}
 }

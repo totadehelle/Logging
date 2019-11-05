@@ -12,9 +12,10 @@ namespace Logging
             _logger = new Logger();
 		}
 
-		/// <summary>
+        /// <summary>
         /// Set minimum severity level of events to be logged. A message will be logged if it
         /// has the same or higher level of severity. Otherwise it will be ignored.
+        /// Default level is LogLevel.Information.
         /// </summary>
         public LoggerConfiguration SetMinimumLevel(LogLevel level)
 		{
@@ -45,10 +46,10 @@ namespace Logging
         /// </summary>
         public void BuildLogger()
 		{
-            if (GlobalLogger.IsConfigured)
+            if (GlobalLoggerContext.IsConfigured)
                 throw new Exception("Logger may be configured once only.");
-            GlobalLogger.IsConfigured = true;
-            Volatile.Write(ref GlobalLogger.Instance, _logger);
+            GlobalLoggerContext.IsConfigured = true;
+            Volatile.Write(ref GlobalLoggerContext.Instance, _logger);
         }
 	}
 }
