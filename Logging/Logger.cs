@@ -18,8 +18,6 @@ namespace Logging
 		{
 			if(level < MinimumLevel)
 				return;
-            if (IsDebugOutputOn)
-                System.Diagnostics.Debug.Write(message);
             foreach (var module in OutputModules)
 			{
 				module.Write(message);

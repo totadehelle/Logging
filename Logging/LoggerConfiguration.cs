@@ -32,15 +32,6 @@ namespace Logging
             return this;
         }
 
-        /// <summary>
-        /// Turn on/off writing log messages to IDE console for debugging (turned off on default)
-        /// </summary>
-        public LoggerConfiguration SetDebugOutput(bool isTurnedOn)
-        {
-            _logger.IsDebugOutputOn = isTurnedOn;
-            return this;
-        }
-
 		/// <summary>
         /// Finish logger configuration process and save all the settings.
         /// </summary>
