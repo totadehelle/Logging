@@ -19,7 +19,7 @@ namespace Logging
         public static LoggerConfiguration GetBuilder()
         {
             if (GlobalLoggerContext.IsConfigured)
-                throw new Exception("Logger may be configured once only.");
+                throw new LoggerConfiguringForbiddenException("Logger may be configured once only.");
             return new LoggerConfiguration();
         }
 
@@ -82,8 +82,7 @@ namespace Logging
         /// </summary>
         public static void Close()
         {
-            var oldLogger = Logger;
-            GlobalLoggerContext.Instance = Interlocked.Exchange(ref GlobalLoggerContext.Instance, new DefaultLogger());
+            var oldLogger = Interlocked.Exchange(ref GlobalLoggerContext.Instance, new DefaultLogger());
             oldLogger.Flush();
         }
 	}

@@ -51,7 +51,7 @@ namespace Logging
         public void BuildLogger()
 		{
             if (GlobalLoggerContext.IsConfigured)
-                throw new Exception("Logger may be configured once only.");
+                throw new LoggerConfiguringForbiddenException("Logger may be configured once only.");
             GlobalLoggerContext.IsConfigured = true;
             Volatile.Write(ref GlobalLoggerContext.Instance, _logger);
         }
